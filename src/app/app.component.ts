@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from './notification.service';
+
 
 @Component({
     selector: 'app-root',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    title = 'app';
+    public title = 'app';
+    private wantedPrice = 210;
+    private reset = false;
+
+    constructor(private notificationSvc: NotificationService) { }
 
     public ngOnInit(): void {
-        const exampleSocket = new WebSocket('wss://ws-feed.gdax.com');
+        const socket = new WebSocket('wss://ws-feed.gdax.com');
         const msg: any = {
             'type': 'subscribe',
             'product_ids': [
@@ -19,35 +25,35 @@ export class AppComponent implements OnInit {
                 'level2'
             ]
         };
-        exampleSocket.onopen = function (event) {
-            exampleSocket.send(JSON.stringify(msg));
-
+        socket.onopen = function (event) {
+            socket.send(JSON.stringify(msg));
         };
-        let reset = false;
         let buys: number[] = [];
         let sells: number[] = [];
         let b: number[] = [];
         let s: number[] = [];
-        setInterval(() => reset = true, 5000);
-        exampleSocket.onmessage = (event) => {
+        setInterval(() => this.reset = true, 5000);
+        socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             if (data && data.changes && data.changes[0][2] !== '0') {
                 const change = parseFloat(parseFloat(data.changes[0][1]).toFixed(2));
                 if (data.changes[0][0] === 'buy') {
-                    // console.log(change);
                     buys.push(change);
                 } else {
-                    // console.log('                                                    ', change);
                     sells.push(change);
                 }
-                if (reset) {
+                if (this.reset) {
                     console.clear();
                     b = this.GetStats('Buy', buys);
                     s = this.GetStats('Sell', sells);
-                    console.log(`Vol : ${b[0] + s[0]}  avg: ${(b[0] * b[1] + s[0] * s[1]) / (b[0] + s[0])} mean: ${(b[2] + s[2]) / 2}`);
+                    const p = (b[0] * b[1] + s[0] * s[1]) / (b[0] + s[0]);
+                    console.log(`Vol : ${b[0] + s[0]}  avg: ${p} mean: ${(b[2] + s[2]) / 2}`);
+                    if (p > this.wantedPrice) {
+                        this.notificationSvc.notify('$ ' + p);
+                    }
                     buys = [];
                     sells = [];
-                    reset = false;
+                    this.reset = false;
                 }
             }
         };
@@ -66,3 +72,4 @@ export class AppComponent implements OnInit {
         return [total, avg, mean];
     }
 }
+
