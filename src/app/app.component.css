@@ -1,0 +1,32 @@
+:host {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+.big-cell {
+    display: block;
+    width: 250px;
+    text-align: center;
+}
+
+.med-cell {
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 120px;
+    padding: 5px;
+}
+
+.currency-name {
+    font-size: 20px;
+}
+.currency-value {
+    font-size: 32px;
+}
+.buy {
+    background: rgba(132, 247, 102, .85);
+}
+
+.sell {
+    background: rgba(255, 105, 57, .85);
+}

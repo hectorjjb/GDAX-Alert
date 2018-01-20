@@ -9,7 +9,7 @@ export class NotificationService {
         // Let's check if the browser supports notifications
         if (!('Notification' in window)) {
             console.error('This browser does not support desktop notification');
-        } else if (Notification.permission !== 'denied') {
+        } else if ((Notification as any).permission !== 'denied') {
             console.log('requestPermission');
             Notification.requestPermission((permission) => {
                 // If the user accepts, let's create a notification
