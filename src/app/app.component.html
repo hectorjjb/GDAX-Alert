@@ -1,14 +1,14 @@
 <div>
   <div class="big-cell">
-    <div class="currency-name">LTC-USB</div>
-    <div class="currency-value">${{ totalPrice }}</div>  
+    <div class="currency-name" [ngClass]="tick?.side">LTC-USB</div>
+    <div class="currency-value">${{ tick?.price }}</div>
   </div>
   <div class="big-cell">
-    <div class="med-cell buy">
-      ${{ buyPrice }}
+    <div class="med-cell">
+      ${{ tick?.low_24h }}
     </div>
-    <div class="med-cell sell">
-      ${{ sellPrice }}
+    <div class="med-cell">
+      ${{ tick?.high_24h }}
     </div>
   </div>
 </div>
