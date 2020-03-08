@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class NotificationService {
     private audio = new Audio('/assets/audio/coins.mp3');
     private permission = false;

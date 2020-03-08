@@ -1,20 +1,33 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/replaysubject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, ReplaySubject } from 'rxjs';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GdaxService {
     public priceChange$: Observable<Tick>;
     private changes = new ReplaySubject<Tick>(1);
-    private socket = new WebSocket('wss://ws-feed.gdax.com');
+    private socket = new WebSocket('wss://ws-feed.pro.coinbase.com');
 
     constructor() {
         this.priceChange$ = this.changes.asObservable();
         this.socket = new WebSocket('wss://ws-feed.gdax.com');
         const msg: any = {
-            'type': 'subscribe',
-            'channels': [{ 'name': 'ticker', 'product_ids': ['LTC-USD'] }]
+            type: 'subscribe',
+            product_ids: [
+              'LTC-USD',
+              'ETH-USD'
+          ],
+            channels: [
+              {
+                name: 'ticker',
+                product_ids: [
+                    'LTC-USD',
+                    'ETH-USD'
+                ]
+            }
+            ]
         };
         this.socket.onopen = (event) => {
             this.socket.send(JSON.stringify(msg));
