@@ -1,0 +1,40 @@
+app-root {
+	background: #15232c;
+	color: #ced2d5;
+	text-align: center;
+    display: block;
+    height: 100%;
+    padding: 25px;
+    width: 100%;
+
+	.big-cell {
+		display: block;
+		width: 380px;
+		text-align: center;
+        color: #fff;
+        .currency-name {
+            font-size: 20px;
+            &.buy {
+                background: rgba(132, 247, 102, .85);
+            }
+
+            &.sell {
+                background: rgba(255, 105, 57, .85);
+            }
+        }
+        .currency-value {
+            font-size: 64px;
+        }
+	}
+
+	.med-cell {
+		display: inline-block;
+		box-sizing: border-box;
+		font-size: 16px;
+		width: 165px;
+        padding: 5px;
+        .percent {
+            font-size: 32px;
+        }
+	}
+}

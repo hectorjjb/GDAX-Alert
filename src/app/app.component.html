@@ -1,14 +1,16 @@
-<div>
+<div *ngIf="tick">
   <div class="big-cell">
-    <div class="currency-name" [ngClass]="tick?.side">LTC-USB</div>
+    <div class="currency-name" [ngClass]="tick.side">LTC-USB</div>
     <div class="currency-value">${{ tick?.price }}</div>
   </div>
   <div class="big-cell">
     <div class="med-cell">
-      ${{ tick?.low_24h }}
+        <div class="percent">{{ tick.low_24h_delta }}%</div>
+        <div>Low ${{ tick.low_24h }}</div>
     </div>
     <div class="med-cell">
-      ${{ tick?.high_24h }}
+        <div class="percent">{{ tick.high_24h_delta }}%</div>
+        <div>High ${{ tick.high_24h }}</div>
     </div>
   </div>
 </div>
