@@ -13,4 +13,20 @@
         <div>High ${{ tick.high_24h }}</div>
     </div>
   </div>
+  <div class="big-cell" *ngFor="let s of tick.stats">
+    <div class="med-cell">
+        <div class="percent">{{ s.days }}D</div>
+    </div>
+    <div class="med-cell">
+        <div class="percent">{{ s.lowDelta }}%</div>
+        <div>Low ${{ s.low }}</div>
+    </div>
+    <div class="med-cell">
+        <div class="percent">{{ s.highDelta }}%</div>
+        <div>High ${{ s.high }}</div>
+    </div>
+    <div class="med-cell">
+        <div class="percent">{{ s.range }}%</div>
+    </div>
+  </div>
 </div>
